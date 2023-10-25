@@ -34,7 +34,9 @@ class LlamaBase(ABC):
         """Generate a combined prompt for the model."""
         # Append the system prompt to the user prompt
         user_prompt = self._generate_user_prompt(messages=messages)
-        return f"<<SYS>>\n{self.system_prompt}\n<</SYS>>\n\n{user_prompt}\n\n{suffix}"
+        # Change the formatting to match Mistral's expectations (if necessary)
+        # For example, remove the <<SYS>> and <</SYS>> tags if Mistral doesn't use them
+        return f"{self.system_prompt}\n{user_prompt}\n{suffix}"
 
 class LlamaLocal(LlamaBase):
     """Uses llama_cpp locally to generate responses."""
